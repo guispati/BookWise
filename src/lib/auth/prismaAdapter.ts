@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse, NextPageContext } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { Adapter } from "next-auth/adapters";
 import { prisma } from "../prisma";
 

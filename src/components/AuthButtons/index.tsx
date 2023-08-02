@@ -3,18 +3,31 @@ import { AuthButton, Container } from "./styles";
 import Google from "../../assets/Google.svg";
 import Github from "../../assets/Github.svg";
 import Rocket from "../../assets/Rocket.svg";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
-type Service = "google" | "github" | "visitor";
+type Services = "google" | "github" | "guest";
 
 interface AuthButtonsProps {
     canGuest?: boolean;
     callbackUrl?: string;
-    service: Service;
 }
 
-export function AuthButtons({ canGuest, callbackUrl, service }: AuthButtonsProps) {
-    function handleSignIn(service: Service) {
-        console.log("oi");
+export function AuthButtons({ canGuest, callbackUrl }: AuthButtonsProps) {
+    const router = useRouter();
+
+    function handleSignIn(service: Services) {
+        switch (service) {
+            case "google":
+                signIn("google", { callbackUrl });
+            break;
+            case "github":
+                signIn("github", { callbackUrl });
+            break;
+            case "guest":
+                router.push("/");
+            break;
+        }
     }
 
     return (
@@ -29,10 +42,12 @@ export function AuthButtons({ canGuest, callbackUrl, service }: AuthButtonsProps
                 Entrar com Github
             </AuthButton>
 
-            <AuthButton onClick={() => handleSignIn("google")}>
-                <Image src={Rocket} alt="Acessar como visitante" width={32} height={32} />
-                Acessar como visitante
-            </AuthButton>
+            {canGuest && (
+                <AuthButton onClick={() => handleSignIn("guest")}>
+                    <Image src={Rocket} alt="Acessar como visitante" width={32} height={32} />
+                    Acessar como visitante
+                </AuthButton>
+            )}
         </Container>
     );
 };

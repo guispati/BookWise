@@ -17,7 +17,7 @@ export default function SignIn() {
                 <Heading size="lg" color="gray-200">Boas vindas!</Heading>
                 <Text color="gray-200">Faça seu login ou acesse como visitante.</Text>
 
-                <AuthButtons />
+                <AuthButtons canGuest />
             </LoginSection>
         </Container>
     );

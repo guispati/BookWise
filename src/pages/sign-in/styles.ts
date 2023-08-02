@@ -16,7 +16,7 @@ export const LogoSection = styled('div', {
 export const LoginSection = styled('div', {
     maxWidth: "372px",
     width: "100%",
-    marginLeft: "auto",
+    margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
