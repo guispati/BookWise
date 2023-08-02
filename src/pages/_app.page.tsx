@@ -1,13 +1,12 @@
-import { ReactElement, ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query";
 
 import { globalStyles } from "@/styles/global";
 import { Nunito } from "next/font/google";
-
-import type { AppProps } from "next/app";
-import type { NextPage } from "next/types";
+import { AppProps } from "next/app";
+import { DefaultLayout } from "./layouts/DefaultLayout";
+import { DefaultSeo } from "next-seo";
 
 export const nunito = Nunito({
   subsets: ["latin"],
@@ -15,24 +14,21 @@ export const nunito = Nunito({
 
 globalStyles();
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  	getLayout?: (page: ReactElement) => ReactNode;
-};
-
-type AppPropsWithLayout = AppProps & {
-  	Component: NextPageWithLayout;
-};
-
-export default function App({
-	Component,
-	pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
-	const getLayout = Component.getLayout ?? ((page) => page);
-
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<SessionProvider session={session}>
-				{getLayout(<Component {...pageProps} />)}
+				<DefaultLayout>
+					<DefaultSeo
+						openGraph={{
+							type: 'website',
+							locale: 'pt_BR',
+							url: 'https://bookwise.com.br',
+							siteName: 'BookWise',
+						}}
+					/>
+					<Component {...pageProps} />
+				</DefaultLayout>
 			</SessionProvider>
 		</QueryClientProvider>
 	);

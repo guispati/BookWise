@@ -1,16 +1,10 @@
-import Head from "next/head";
-import { DefaultLayoutContent, DefaultLayoutContainer } from "./styles";
-import type { DefaultLayoutProps } from "./types";
+import { PropsWithChildren } from "react";
+import { DefaultLayoutContainer } from "./styles";
 
-export const DefaultLayout = ({ title, children }: DefaultLayoutProps) => {
-  return (
-    <DefaultLayoutContainer>
-        <Head>
-            <title>{`${title} | BookWise`}</title>
-            <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
-        </Head>
-        
-        <DefaultLayoutContent>{children}</DefaultLayoutContent>
-    </DefaultLayoutContainer>
-  );
+export function DefaultLayout({ children }: PropsWithChildren) {
+    return (
+        <DefaultLayoutContainer>
+            {children}
+        </DefaultLayoutContainer>
+    );
 };
