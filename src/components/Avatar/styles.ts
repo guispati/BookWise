@@ -3,6 +3,8 @@ import Image from "next/image";
 
 export const AvatarContainer = styled('div', {
     borderRadius: '$full',
+    background: '$gradient-vertical',
+    padding: '$px',
 
     variants: {
         size: {
