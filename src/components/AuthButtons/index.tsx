@@ -1,10 +1,10 @@
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import { AuthButton, Container } from "./styles";
 import Google from "../../assets/Google.svg";
 import Github from "../../assets/Github.svg";
 import Rocket from "../../assets/Rocket.svg";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 
 type Services = "google" | "github" | "guest";
 
@@ -13,7 +13,7 @@ interface AuthButtonsProps {
     callbackUrl?: string;
 }
 
-export function AuthButtons({ canGuest, callbackUrl }: AuthButtonsProps) {
+export function AuthButtons({ canGuest, callbackUrl = "/" }: AuthButtonsProps) {
     const router = useRouter();
 
     function handleSignIn(service: Services) {
