@@ -37,3 +37,9 @@ export const BookContent = styled('div', {
     flexDirection: 'column',
     gap: '$5',
 });
+
+export const CompactDetails = styled('div', {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+});

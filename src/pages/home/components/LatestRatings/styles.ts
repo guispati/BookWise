@@ -8,3 +8,17 @@ export const LatestRatingsContainer = styled('section', {
         gap: '$3',
     },
 });
+
+export const YourLatestReadingContainer = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '$4',
+    marginBottom: '$10',
+});
+
+
+export const YourLatestReadingTitle = styled('div', {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+});
