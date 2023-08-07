@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const SidebarContainer = styled('nav', {
     background: `url('/images/sidebar-background.png')`,
     backgroundSize: 'cover',
-    height: '100%',
+    height: '95vh',
     width: '14.5rem',
     padding: '$10 0 $6 0',
     display: 'flex',

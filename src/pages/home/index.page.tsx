@@ -3,11 +3,11 @@ import { NextSeo } from 'next-seo';
 import { ChartLineUp } from 'phosphor-react';
 import { LatestRatings } from './components/LatestRatings';
 import { TrendingBooks } from './components/TrendingBooks';
-import { Container, Content } from './styles';
+import { Content } from './styles';
 
 export default function Home() {
     return (
-        <Container>
+        <main>
             <NextSeo
                 title='Home | BookWise'
                 description='BookWise é uma aplicação web para avaliação e gerenciamento de leituras.'
@@ -18,6 +18,6 @@ export default function Home() {
                 <LatestRatings />
                 <TrendingBooks />
             </Content>
-        </Container>
+        </main>
     );
 }
