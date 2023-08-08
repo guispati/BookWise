@@ -6,22 +6,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== "GET")
         return res.status(405).json({ message: "Not allowed" });
 
-    const { categories: queryCategories } = req.query as {
-        categories?: string[];
-        name?: string;
+    const { categories: queryCategories, name: queryName } = req.query as {
+        categories: string;
+        name: string;
     }
+
+    const parsedCategories = JSON.parse(queryCategories);
 
     let whereQuery = {} as Prisma.BookWhereInput;
 
-    if (queryCategories && queryCategories.length) {
+    if (parsedCategories && parsedCategories.length) {
         whereQuery = {
             categories: {
                 some: {
                     categoryId: {
-                        in: queryCategories,
+                        in: parsedCategories,
                     },
                 },
             },
+        }
+    }
+
+    
+    if (queryName && queryName !== '') {
+        whereQuery = {
+            ...whereQuery,
+            OR: [
+                {
+                    name: {
+                        contains: queryName,
+                    },
+                },
+                {
+                    author: {
+                        contains: queryName,
+                    },
+                },
+            ],
         }
     }
 

@@ -1,5 +1,5 @@
 import { MagnifyingGlass } from "phosphor-react";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes } from "react";
 import { InputContainer } from "./styles";
 
 export function Input({ ...props }: InputHTMLAttributes<HTMLInputElement>) {

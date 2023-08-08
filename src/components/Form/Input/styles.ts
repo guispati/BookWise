@@ -9,6 +9,8 @@ export const InputContainer = styled('div', {
     border: '1px solid currentColor',
     borderRadius: 4,
     padding: '$4 $5',
+    height: '100%',
+    minWidth: '30%',
     
     '&:focus-within': {
         color: '$green100',

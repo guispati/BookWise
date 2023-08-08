@@ -9,7 +9,7 @@ import { Binoculars } from "phosphor-react";
 import { ExploreContainer, ExploreHeading, TagsContainer } from "./styles";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BookWithAverageRating } from '../home/components/TrendingBooks';
 
 const searchFormSchema = z.object({
@@ -33,21 +33,33 @@ export default function Explore() {
     const { data: books } = useQuery<BookWithAverageRating[]>(
         ["books", selectedCategories, inputSearchBook],
         async () => {
+            const categoriesArray = JSON.stringify(selectedCategories);
+            console.log(inputSearchBook);
             const { data } = await api.get(
-                `/books?categories=${selectedCategories}&name=${inputSearchBook}`
+                `/books?categories=${categoriesArray}&name=${inputSearchBook}`
             );
             return data?.books || [];
         }
     );
 
-    const { register } = useForm<SearchFormInputs>({
+    const { register, watch } = useForm<SearchFormInputs>({
         resolver: zodResolver(searchFormSchema),
     });
 
+    const query = watch('query');
+
+    useEffect(() => {
+        setInputSearchBook(watch('query'));        
+    }, [query]);
+
     function handleSelectCategory(categoryId: string | null) {
         setSelectedCategories((prevCategories) => {
-            if (categoryId && !prevCategories.includes(categoryId)) {
-                return [...prevCategories, categoryId];
+            if (categoryId) {
+                if (prevCategories.includes(categoryId)) {
+                    return prevCategories.filter((category) => category !== categoryId);
+                } else {
+                    return [...prevCategories, categoryId];
+                }
             }
             return prevCategories;
         });
@@ -57,7 +69,7 @@ export default function Explore() {
         <ExploreContainer>
             <ExploreHeading>
                 <PageTitle Icon={Binoculars} text="Explorar" />
-                <Input type="text" placeholder="Buscar conteúdo" {...register('query')} />
+                <Input type="text" placeholder="Buscar livro ou autor" {...register('query')} />
             </ExploreHeading>
 
             <TagsContainer>
@@ -77,6 +89,10 @@ export default function Explore() {
                     </Tag>
                 ))}
             </TagsContainer>
+
+            {books?.map((book) => (
+                <h1>{book.name}</h1>
+            ))}
         </ExploreContainer>
     );
 }
