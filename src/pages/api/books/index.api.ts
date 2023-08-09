@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
+import { buildNextAuthOptions } from '../auth/[...nextauth].api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET")
@@ -10,6 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         categories: string;
         name: string;
     }
+
+    const session = await getServerSession(req, res, buildNextAuthOptions(req, res));
+  
+    const userId = session?.user.id || undefined;
 
     const parsedCategories = JSON.parse(queryCategories);
 
@@ -57,9 +63,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
     });
 
-    const booksWithAverageRating = books.map((book) => {
+    const booksWithAverageRating = await Promise.all(books.map(async (book) => {
         const ratingTotal = book.ratings.reduce((acc, rating) => acc + rating.rate, 0);
         const averageRating = ratingTotal / book.ratings.length;
+        let ratingsCount = 0;
+
+        if (userId) {
+            ratingsCount = await prisma.rating.count({
+                where: {
+                    AND: [
+                        {
+                            user_id: userId,
+                        },
+                        {
+                            book_id: book.id,
+                        }
+                    ]
+                },
+            });
+        }
+        
+        const read = ratingsCount > 0;
 
         return {
             id: book.id,
@@ -67,9 +91,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             cover_url: book.cover_url,
             name: book.name,
             summary: book.summary,
-            rate: averageRating,
+            averageRating,
+            read,
         }
-    });
+    }));
 
     return res.status(200).json({ books: booksWithAverageRating });
 }

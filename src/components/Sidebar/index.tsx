@@ -25,12 +25,12 @@ export function Sidebar() {
                 <Image src={Logo} alt="BookWise" width={128} height={32} />
 
                 <NavigationContainer>
-                    <NavItem href="/" active={router.asPath === '/'}>
+                    <NavItem href="/" active={router.route === '/'}>
                         <ChartLineUp size={ICON_SIZE} />
                         Início
                     </NavItem>
 
-                    <NavItem href="/explore" active={router.asPath === '/explore'}>
+                    <NavItem href="/explore" active={router.route === '/explore'}>
                         <Binoculars size={ICON_SIZE} />
                         Explorar
                     </NavItem>

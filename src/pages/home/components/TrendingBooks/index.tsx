@@ -12,6 +12,7 @@ export interface BookWithAverageRating {
     name: string;
     summary: string;
     averageRating: number;
+    read?: boolean;
 }
 
 export function TrendingBooks() {

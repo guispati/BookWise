@@ -40,7 +40,7 @@ export function ProfileRatings({ ratings }: ProfileRatingsProps) {
 
     return (
         <ProfileRatingsContainer>
-            <Input type="text" placeholder="Buscar conteúdo" {...register('query')} />
+            <Input type="text" placeholder="Buscar conteúdo" inputName="query" register={register} />
 
             <ProfileRatingList>
                 {filteredRatings?.map(rating => (

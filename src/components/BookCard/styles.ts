@@ -7,6 +7,8 @@ export const BookCardContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '$5',
+    position: 'relative',
+    cursor: 'pointer',
 });
 
 export const BookDetails = styled('div', {
@@ -14,4 +16,17 @@ export const BookDetails = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+});
+
+export const ReadBadge = styled('span', {
+    position: 'absolute',
+    display: 'block',
+    background: '$green300',
+    top: 0,
+    right: 0,
+    color: '$green100',
+    fontWeight: '$bold',
+    fontSize: '$xs',
+    padding: '$1 $3',
+    borderRadius: '0px 4px 0px 4px',
 });

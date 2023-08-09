@@ -10,6 +10,7 @@ export const InputContainer = styled('div', {
     borderRadius: 4,
     padding: '$4 $5',
     height: '100%',
+    maxHeight: '3.375rem',
     minWidth: '30%',
     
     '&:focus-within': {
