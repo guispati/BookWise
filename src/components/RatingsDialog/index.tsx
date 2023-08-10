@@ -6,6 +6,7 @@ import { BookContent, BookDetailsContainer, BookDetailsWrapper, BookImage, BookI
 import { Heading } from "../Typography/Heading";
 import { Text } from "../Typography/Text";
 import { RatingStars } from "../RatingStars";
+import { BookRatings } from "./components/BookRatings";
 
 interface RatingsDialogProps {
     bookId: string;
@@ -87,6 +88,8 @@ export function RatingsDialog ({ bookId, children }: PropsWithChildren & Ratings
                                 </InfoItem>
                             </BookInfos>
                         </BookDetailsWrapper>
+
+                        <BookRatings />
                     </>
                 </DialogContent>
             </Dialog.Portal>

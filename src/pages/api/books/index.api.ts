@@ -15,13 +15,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const session = await getServerSession(req, res, buildNextAuthOptions(req, res));
   
-    const userId = session?.user.id || undefined;
+    const userId = session?.user.id ?? undefined;
 
     const parsedCategories = JSON.parse(queryCategories);
 
     let whereQuery = {} as Prisma.BookWhereInput;
 
-    if (parsedCategories && parsedCategories.length) {
+    if (parsedCategories?.length) {
         whereQuery = {
             categories: {
                 some: {
