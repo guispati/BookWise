@@ -3,36 +3,49 @@ import { BookRatingsContainer, RatingsContainer } from "./styles";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { RatingCard } from "../RatingCard";
+import { RatingWithAuthor } from "../..";
+import { LoginDialog } from "@/components/LoginDialog";
+import { RatingForm } from "../RatingForm";
 
-export function BookRatings() {
-    const { status } = useSession();
+interface BookRatingsProps {
+    bookId: string;
+    ratings: RatingWithAuthor[];
+}
+
+export function BookRatings({ bookId, ratings }: BookRatingsProps) {
+    const { data: session } = useSession();
     const [showRatingForm, setShowRatingForm] = useState(false);
 
-    const isAuthenticated = status === "authenticated";
+    const user = session?.user;
 
     function handleRate() {
-        if (!isAuthenticated) return;
+        if (!user) return;
         setShowRatingForm((oldState) => !oldState);
     };
 
-    const showRatingButton = isAuthenticated;
+    const showRatingButton = user !== undefined;
 
     return (
         <BookRatingsContainer>
             <header>
                 <Text size='sm' color='gray-200'>Avaliações</Text>
-                {showRatingButton && (
+                {showRatingButton ? (
                     <button onClick={handleRate}>Avaliar</button>
+                ) : (
+                    <LoginDialog>
+                        <button onClick={handleRate}>Avaliar</button>
+                    </LoginDialog>
                 )}
             </header>
 
             <RatingsContainer>
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
+                {showRatingForm && (
+                    <RatingForm bookId={bookId} onCancel={() => setShowRatingForm(false)} />
+                )}
+
+                {ratings.map(rating => (
+                    <RatingCard key={rating.id} rating={rating} />
+                ))}
             </RatingsContainer>
         </BookRatingsContainer>
     );

@@ -18,16 +18,16 @@ export const Container = styled('p', {
       
         color: {
             "gray-100": {
-              color: "$gray100",
+              	color: "$gray100",
             },
             "gray-200": {
-              color: "$gray200",
+              	color: "$gray200",
             },
             "gray-300": {
-              color: "$gray300",
+              	color: "$gray300",
             },
             "gray-400": {
-              color: "$gray400",
+              	color: "$gray400",
             },
         },
     },

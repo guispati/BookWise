@@ -38,4 +38,4 @@ next-env.d.ts
 .env
 
 # Dev database
-prisma/*.db
+prisma/dev.db

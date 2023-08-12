@@ -4,13 +4,9 @@ import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { CaretRight } from "phosphor-react";
 import { SeeMoreLink, TrendingBooksContainer, TrendingBooksTitle } from "./styles";
+import { Book } from "@prisma/client";
 
-export interface BookWithAverageRating {
-    id: string;
-    author: string;
-    cover_url: string;
-    name: string;
-    summary: string;
+export type BookWithAverageRating = Book & {
     averageRating: number;
     read?: boolean;
 }
